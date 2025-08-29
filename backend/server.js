@@ -2,7 +2,30 @@ import express from 'express'
 import cors from 'cors'
 import { createCrestSvg, pseudoBlockNumber } from './utils/crest.js'
 import { nanoid } from 'nanoid'
+// frontend/src/pages/Home.tsx
 
+// ... (imports and component definition)
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch('/api/stats')
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch stats');
+        }
+        return res.json()
+      })
+      .then(setStats)
+      .catch(() => {
+        setError('Could not load stats. Please try again later.');
+      });
+  }, []);
+
+// ... (rest of the component)
+
+      {error && <p className="text-red-500 text-center">{error}</p>}
+// ... (rest of the file)
 const app = express()
 
 app.use(cors({
