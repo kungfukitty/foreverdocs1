@@ -1,5 +1,18 @@
 import { useRef, useState, useEffect } from 'react'
+// frontend/src/pages/Demo.tsx
 
+// ... (imports and component definition)
+
+      if (!response.ok) {
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          throw new Error(`Server error: ${response.status}`);
+        }
+        throw new Error(errorData.error || `Server error: ${response.status}`);
+      }
+// ... (rest of the file)
 interface RegistrationResult {
   success: boolean
   document: {
