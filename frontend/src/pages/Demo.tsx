@@ -15,7 +15,7 @@ export default function Demo(){
       const buf = await f.arrayBuffer()
       const hashBuf = await crypto.subtle.digest('SHA-256', buf)
       const hashHex = Array.from(new Uint8Array(hashBuf)).map(b=>b.toString(16).padStart(2,'0')).join('')
-      const res = await fetch(import.meta.env.VITE_API_BASE + '/register', {
+      const res = await fetch('http://localhost:3000/api/register', {
         method: 'POST', headers: { 'Content-Type':'application/json' },
         body: JSON.stringify({ hash: hashHex, filename: f.name })
       })
