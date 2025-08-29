@@ -1,6 +1,29 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+// frontend/src/pages/Home.tsx
 
+// ... (imports and component definition)
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch('/api/stats')
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch stats');
+        }
+        return res.json()
+      })
+      .then(setStats)
+      .catch(() => {
+        setError('Could not load stats. Please try again later.');
+      });
+  }, []);
+
+// ... (rest of the component)
+
+      {error && <p className="text-red-500 text-center">{error}</p>}
+// ... (rest of the file)
 interface Stats {
   documentsRegistered: number
   familiesProtected: number
